@@ -47,8 +47,13 @@ export default {
       }
       const res = await articleList(params)
       if (!res) return
+
       this.articleData = res.data.items
       this.pageObj.total = res.data.total
+      const timer = setTimeout(() => {
+        this.$vuetify.goTo('html')
+        clearTimeout(timer)
+      }, 10)
     }
   },
   head() {

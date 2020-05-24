@@ -52,6 +52,10 @@
     content: "";
   }
 }
+.elevation-wrap {
+  background-color: #ffffff;
+  border-radius: 4px;
+}
 .theme--dark {
   .markdown-body .highlight pre, .markdown-body pre {
     background-color: #363636;
@@ -61,6 +65,9 @@
   }
   .hljs-keyword, .hljs-selector-tag, .hljs-subst {
     color: white;
+  }
+  .elevation-wrap {
+    background-color: #4e4e4e;
   }
 }
 @media (max-width: 767px) {

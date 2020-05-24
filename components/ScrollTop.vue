@@ -2,6 +2,7 @@
   <v-fab-transition>
     <v-btn
       v-show="!hidden"
+      ref="ScrollTop"
       :elevation="15"
       fixed
       bottom
@@ -41,7 +42,7 @@ export default {
   mounted() {
     // 顶部图标的显示与隐藏
     window.onscroll = () => {
-      if (document.documentElement.scrollTop > 200) {
+      if (document.querySelector('html').scrollTop > 200) {
         this.hidden = false
       } else {
         this.hidden = true

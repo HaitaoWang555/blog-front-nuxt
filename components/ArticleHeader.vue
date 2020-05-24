@@ -39,7 +39,7 @@
         class="pointer px-6 mx-3"
       >
         <span class="pointer">
-          <nuxt-link :to="{ path: '/tag/' }">{{ item }}</nuxt-link>
+          <nuxt-link :to="{ path: '/tag/?v=' + item }">{{ item }}</nuxt-link>
         </span>
       </v-chip>
     </v-layout>

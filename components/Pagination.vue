@@ -1,7 +1,13 @@
 <template>
   <div class="w-pagination designWidth">
     <v-layout row align-center justify-center>
-      <v-flex v-if="pageObj.total" xs1 sm1 md1 class="text-xs-left">
+      <v-flex
+        v-if="pageObj.total && !isMobile"
+        xs1
+        sm1
+        md1
+        class="text-xs-left"
+      >
         <v-btn small>共{{ pageObj.total }}条</v-btn>
       </v-flex>
       <v-flex class="text-xs-center">
@@ -12,7 +18,19 @@
           @input="goChange"
         ></v-pagination>
       </v-flex>
-      <v-flex xs1 sm1 md1 class="text-xs-center">
+      <v-flex v-if="!isMobile" xs1 sm1 md1 class="text-xs-center">
+        <v-text-field
+          v-model.number="pageObj.page"
+          type="number"
+          @change="goChange"
+        ></v-text-field>
+      </v-flex>
+    </v-layout>
+    <v-layout row align-center justify-center>
+      <v-flex v-if="pageObj.total && isMobile" xs3 sm3 class="text-xs-left">
+        <v-btn small>共{{ pageObj.total }}条</v-btn>
+      </v-flex>
+      <v-flex v-if="isMobile" xs2 sm2 class="text-xs-center">
         <v-text-field
           v-model.number="pageObj.page"
           type="number"
@@ -50,6 +68,7 @@ export default {
   },
   data() {
     return {
+      isMobile: false,
       btnNum: 7,
       savePage: 1
     }
@@ -62,7 +81,8 @@ export default {
     }
   },
   mounted() {
-    this.btnNum = window.innerWidth > 720 ? 7 : 4
+    this.isMobile = window.innerWidth < 720
+    this.btnNum = this.isMobile ? 4 : 7
   },
   methods: {
     goChange() {
@@ -71,7 +91,6 @@ export default {
         this.pageObj.page = this.savePage
         return
       }
-      this.$vuetify.goTo('html')
       this.savePage = this.pageObj.page
       this.changePage()
     }
