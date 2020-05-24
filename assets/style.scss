@@ -41,15 +41,15 @@
     margin: 0;
     padding: 25px 0;
     color: inherit!important;
+    code:after, code:before, kbd:after, kbd:before {
+      content: "";
+    }
   }
   .markdown-body code {
     box-shadow: none;
   }
   .markdown-body pre {
     box-shadow: none;
-  }
-  .v-application code:after, .v-application code:before, .v-application kbd:after, .v-application kbd:before {
-    content: "";
   }
 }
 .elevation-wrap {
