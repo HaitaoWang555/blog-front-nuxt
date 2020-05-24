@@ -5,11 +5,9 @@ const isProd = process.env.NODE_ENV === 'production'
 const baseUrl = isProd
   ? serveConfigProd.prodBaseURL
   : serveConfig.devProxyURL + serveConfig.baseApi
-const proxy = isProd ? serveConfigProd.proxy : false
 // create an axios instance
 const service = axios.create({
-  baseURL: baseUrl, // url = base url + request url
-  proxy
+  baseURL: baseUrl
 })
 service.defaults.headers.post['Content-Type'] =
   'application/json, charset=UTF-8'
