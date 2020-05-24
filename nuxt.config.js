@@ -1,3 +1,4 @@
+import serveConfig from './config/server-config'
 const isDev = process.env.NODE_ENV === 'development'
 
 export default {
@@ -6,8 +7,8 @@ export default {
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    titleTemplate: '%s',
+    title: serveConfig.blogName || '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -45,7 +46,21 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: ['@nuxtjs/proxy'],
+  proxy: {
+    '/api': {
+      target: serveConfig.devProxyURL,
+      pathRewrite: {
+        '^/api': '/api'
+      }
+    },
+    '/upload': {
+      target: serveConfig.devProxyURL,
+      pathRewrite: {
+        '^/upload': '/upload'
+      }
+    }
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module

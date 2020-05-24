@@ -65,11 +65,39 @@
 <script>
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import { articleList } from '~/api/home'
 
 export default {
+  name: 'Index',
   components: {
     Logo,
     VuetifyLogo
+  },
+  async asyncData(context) {
+    const params = {
+      page: 1,
+      pageSize: 15
+    }
+    const res = await articleList(params)
+    if (!res) return
+    return {
+      articleData: res.data.items,
+      pageObj: {
+        page: 1,
+        pageSize: 15,
+        total: res.data.total || null
+      }
+    }
+  },
+  data() {
+    return {
+      articleData: null,
+      pageObj: {}
+    }
+  },
+  methods: {},
+  head() {
+    return { title: `首页` }
   }
 }
 </script>

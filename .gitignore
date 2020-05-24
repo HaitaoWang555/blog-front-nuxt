@@ -88,3 +88,4 @@ sw.*
 
 # Vim swap files
 *.swp
+config/server-config-prod.js
