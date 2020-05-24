@@ -58,6 +58,11 @@ export default {
       active: null
     }
   },
+  mounted() {
+    if (this.active) {
+      document.querySelector("#navList a[href='/tag']").click()
+    }
+  },
   methods: {
     clickTag(item) {
       this.active = item.name

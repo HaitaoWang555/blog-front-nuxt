@@ -7,7 +7,7 @@
       fixed
       app
     >
-      <v-list>
+      <v-list id="navList">
         <v-list-item
           v-for="(item, i) in items"
           :key="i"

@@ -13,7 +13,9 @@
           class="pr-2 pointer flex-between-center"
         >
           <v-icon class="pr-1">mdi-folder</v-icon>
-          <nuxt-link :to="{ path: '/category/' }">{{ item }}</nuxt-link>
+          <nuxt-link :to="{ path: '/category?v=' + item }">{{
+            item
+          }}</nuxt-link>
         </span>
       </template>
       <span class="px-2">
@@ -39,7 +41,7 @@
         class="pointer px-6 mx-3"
       >
         <span class="pointer">
-          <nuxt-link :to="{ path: '/tag/?v=' + item }">{{ item }}</nuxt-link>
+          <nuxt-link :to="{ path: '/tag?v=' + item }">{{ item }}</nuxt-link>
         </span>
       </v-chip>
     </v-layout>
