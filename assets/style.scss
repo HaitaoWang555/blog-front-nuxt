@@ -18,13 +18,28 @@
 .pointer {
   cursor: pointer!important;
 }
-
+.articleHeader a {
+  text-decoration: none;
+}
+.wrap > span:first-child {
+  margin-left: 0;
+  padding-left: 0;
+}
+.flex-between-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.designWidth {
+  min-width: 200px;max-width: 980px;margin: 0 auto;
+}
 .markdown-body {
   box-sizing: border-box;
   min-width: 200px;
   max-width: 980px;
   margin: 0;
   padding: 25px 0;
+  color: inherit!important;
 }
 .markdown-body pre code {
   box-shadow: none;

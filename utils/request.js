@@ -19,6 +19,8 @@ service.interceptors.request.use(
   },
   (error) => {
     // do something with request error
+    // eslint-disable-next-line no-console
+    console.log('err' + error) // for debug
     return Promise.reject(error)
   }
 )
@@ -34,6 +36,7 @@ service.interceptors.response.use(
     }
   },
   (error) => {
+    // eslint-disable-next-line no-console
     console.log('err' + error) // for debug
     return null
   }
