@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import Content from '@/components/content'
+import Content from '@/components/Content'
 import { tagArticleList } from '@/api/tag'
 
 export default {
