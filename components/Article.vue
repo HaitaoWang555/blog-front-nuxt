@@ -4,13 +4,18 @@
       <ArticleHeader :data="item"></ArticleHeader>
       <template v-if="model && model.type === 'details'">
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <div class="markdown-body" v-html="markdownContent"></div>
+        <div v-highlight class="markdown-body" v-html="markdownContent"></div>
       </template>
       <template v-else>
         <div class="markdown-body">
           {{ item.content }}
         </div>
-        <v-btn color="primary mb-2" @click="clickTag(item.id)">
+        <v-btn
+          :elevation="2"
+          color="primary mb-2"
+          nuxt
+          :to="{ path: '/article/' + item.id }"
+        >
           阅读全文
         </v-btn>
         <v-divider
@@ -25,6 +30,7 @@
 <script>
 import ArticleHeader from '@/components/ArticleHeader'
 import 'github-markdown-css/github-markdown.css'
+import 'highlight.js/styles/github.css'
 import { lazyload, remEvent } from '@/utils/lazyload'
 
 export default {
