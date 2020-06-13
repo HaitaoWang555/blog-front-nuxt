@@ -4,7 +4,7 @@ import request from '@/utils/request'
  */
 export function tagArticleList() {
   return request({
-    url: '/tag/list',
+    url: 'metas/tag',
     method: 'get'
   })
 }

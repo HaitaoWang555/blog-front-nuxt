@@ -1,6 +1,6 @@
 <template>
-  <div class="mb-2">
-    <Article v-if="articleData && articleData.length > 0" :data="articleData" />
+  <div v-if="articleData && articleData.length > 0" class="mb-2">
+    <Article :data="articleData" />
     <w-pagination :page-obj="pageObj" :change-page="changePage" />
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
     const res = await articleList(params)
     if (!res) return
     return {
-      articleData: res.data.items,
+      articleData: res.data.list,
       pageObj: {
         page: 1,
         pageSize: 15,
@@ -48,7 +48,7 @@ export default {
       const res = await articleList(params)
       if (!res) return
 
-      this.articleData = res.data.items
+      this.articleData = res.data.list
       this.pageObj.total = res.data.total
       const timer = setTimeout(() => {
         this.$vuetify.goTo('html')

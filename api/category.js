@@ -4,7 +4,7 @@ import request from '@/utils/request'
  */
 export function categoryArticleList() {
   return request({
-    url: '/category/list',
+    url: 'metas/category',
     method: 'get'
   })
 }

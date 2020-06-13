@@ -6,7 +6,7 @@ import request from '@/utils/request'
  */
 export function articleList(query) {
   return request({
-    url: '/article/list',
+    url: '/home/list',
     method: 'get',
     params: query
   })

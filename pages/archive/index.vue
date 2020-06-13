@@ -1,17 +1,18 @@
 <template>
-  <div class="archive designWidth">
+  <div
+    v-if="archive && archive.list && archive.list.length > 0"
+    class="archive designWidth"
+  >
     <v-timeline>
       <v-timeline-item
-        v-for="(item, i) in archive.items"
+        v-for="(item, i) in archive.list"
         :key="i"
-        :color="item.color || 'primary'"
+        :color="'primary'"
         small
       >
         <template v-slot:opposite>
           <span
-            :class="
-              `headline font-weight-bold ${item.color || 'primary'}--text`
-            "
+            :class="`headline font-weight-bold ${'primary'}--text`"
             v-text="item.dateStr"
           ></span>
         </template>
@@ -22,7 +23,7 @@
         >
           <div>
             <span class="text--secondary">
-              {{ article.updatedAt | time('{m}-{d}') }}
+              {{ article.updatedTime | time('{m}-{d}') }}
             </span>
             <nuxt-link
               :to="{ path: '/article/' + article.id }"

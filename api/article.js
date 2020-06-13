@@ -5,8 +5,7 @@ import request from '@/utils/request'
  */
 export function article(query) {
   return request({
-    url: '/article/getOne',
-    method: 'get',
-    params: query
+    url: '/article/' + query.id,
+    method: 'get'
   })
 }

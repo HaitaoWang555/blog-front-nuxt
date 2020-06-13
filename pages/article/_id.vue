@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Article :data="[articleData]" :model="model" />
+    <Article v-if="articleData" :data="[articleData]" :model="model" />
   </div>
 </template>
 
@@ -13,12 +13,17 @@ export default {
   components: {
     Article
   },
-  async asyncData(context) {
-    const params = context.params
-    const res = await article(params)
-    if (!res) return
-    return {
-      articleData: res.data
+  async asyncData({ params, error, payload }) {
+    if (payload) {
+      return {
+        articleData: payload
+      }
+    } else {
+      const res = await article(params)
+      if (!res) return
+      return {
+        articleData: res.data
+      }
     }
   },
   data() {
@@ -30,7 +35,8 @@ export default {
     }
   },
   head() {
-    return { title: `${this.articleData.title}` }
+    const title = this.articleData ? this.articleData.title : '无此文章'
+    return { title }
   }
 }
 </script>

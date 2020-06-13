@@ -1,3 +1,4 @@
+import axios from 'axios'
 import serveConfig from './config/server-config'
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -89,5 +90,19 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  generate: {
+    interval: 100,
+    routes() {
+      return axios
+        .get(
+          'https://blog.wanghaitao.club/api/portal/article/list?page=1&pageSize=30'
+        )
+        .then((res) => {
+          return res.data.data.items.map((article) => {
+            return { route: '/article/' + article.id, payload: article }
+          })
+        })
+    }
   }
 }

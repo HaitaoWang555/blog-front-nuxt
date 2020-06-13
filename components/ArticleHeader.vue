@@ -20,7 +20,7 @@
       </template>
       <span class="px-2">
         <v-icon>mdi-calendar-range</v-icon>
-        {{ data.updatedAt | time('{y}-{m}-{d}') }}
+        {{ data.updatedTime | time('{y}-{m}-{d}') }}
       </span>
       <span class="px-2">
         <v-icon>mdi-eye</v-icon>
