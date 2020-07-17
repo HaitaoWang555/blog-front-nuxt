@@ -6,10 +6,14 @@ export default {
   mode: 'universal',
   /*
    ** Headers of the page
+   https://vue-meta.nuxtjs.org/api/
    */
   head: {
     titleTemplate: '%s - ' + serveConfig.blogName,
     title: serveConfig.blogName || '',
+    htmlAttrs: {
+      lang: 'zh-CN'
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
