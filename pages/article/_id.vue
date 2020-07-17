@@ -36,7 +36,21 @@ export default {
   },
   head() {
     const title = this.articleData ? this.articleData.title : '无此文章'
-    return { title }
+    const content = this.articleData
+      ? this.articleData.content
+          .slice(0, 300)
+          .replace(/<[^>]*>|<\/[^>]*>/gm, '')
+      : ''
+    return {
+      title,
+      meta: [
+        {
+          hid: 'description1',
+          name: 'description',
+          content
+        }
+      ]
+    }
   }
 }
 </script>

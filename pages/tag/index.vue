@@ -70,7 +70,32 @@ export default {
     }
   },
   head() {
-    return { title: `标签` }
+    const content1 = []
+    const content2 = []
+    for (let index = 0; index < this.data.length; index++) {
+      const element = this.data[index]
+      content1.push(element.name)
+      const articles = element.articles
+      for (let j = 0; j < articles.length; j++) {
+        const element = articles[j]
+        content2.push(element.title)
+      }
+    }
+    return {
+      title: `标签`,
+      meta: [
+        {
+          hid: 'description1',
+          name: 'description',
+          content: content1.join(',')
+        },
+        {
+          hid: 'description2',
+          name: 'description',
+          content: content2.join(',')
+        }
+      ]
+    }
   }
 }
 </script>

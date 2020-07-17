@@ -56,7 +56,25 @@ export default {
     }
   },
   head() {
-    return { title: `归档` }
+    const content = []
+    for (let index = 0; index < this.archive.list.length; index++) {
+      const element = this.archive.list[index]
+      const articles = element.article
+      for (let j = 0; j < articles.length; j++) {
+        const element = articles[j]
+        content.push(element.title)
+      }
+    }
+    return {
+      title: `归档`,
+      meta: [
+        {
+          hid: 'description1',
+          name: 'description',
+          content: content.join(',')
+        }
+      ]
+    }
   }
 }
 </script>

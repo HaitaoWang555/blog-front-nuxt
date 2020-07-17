@@ -57,7 +57,17 @@ export default {
     }
   },
   head() {
-    return { title: `首页` }
+    const content = this.articleData.map((i) => i.title).join(',')
+    return {
+      title: `首页`,
+      meta: [
+        {
+          hid: 'description1',
+          name: 'description',
+          content
+        }
+      ]
+    }
   }
 }
 </script>

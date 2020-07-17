@@ -8,7 +8,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s',
+    titleTemplate: '%s - ' + serveConfig.blogName,
     title: serveConfig.blogName || '',
     meta: [
       { charset: 'utf-8' },
@@ -16,8 +16,15 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
-      }
+        content: '王海涛的个人博客网站'
+      },
+      {
+        hid: 'keywords',
+        name: 'keywords',
+        content:
+          'JavaScript, git, Java, Sql, CSS, Web APIs, Windows, Linux, Interview Work'
+      },
+      { name: '王海涛', content: '15124505701@163.com' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
@@ -35,7 +42,10 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [{ src: '@/plugins/global' }],
+  plugins: [
+    { src: '@/plugins/global' },
+    { src: '@/plugins/analytics.js', mode: 'client' }
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -95,11 +105,9 @@ export default {
     interval: 100,
     routes() {
       return axios
-        .get(
-          'https://blog.wanghaitao.club/api/portal/article/list?page=1&pageSize=30'
-        )
+        .get('http://localhost:8085/api/portal/article/allPublish')
         .then((res) => {
-          return res.data.data.items.map((article) => {
+          return res.data.data.list.map((article) => {
             return { route: '/article/' + article.id, payload: article }
           })
         })
