@@ -17,9 +17,11 @@ export default ({ app: { router }, store }) => {
   /*
    ** 每次路由变更时进行pv统计
    */
-  const site = 'https://blog.wanghaitao.club'
-  router.afterEach((to, from) => {
-    const url = site + to.fullPath
-    baidu(url)
-  })
+  if (process.client && process.env.NODE_ENV === 'production') {
+    const site = 'https://blog.wanghaitao.club'
+    router.afterEach((to, from) => {
+      const url = site + to.fullPath
+      baidu(url)
+    })
+  }
 }

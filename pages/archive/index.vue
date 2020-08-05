@@ -23,7 +23,7 @@
         >
           <div>
             <span class="text--secondary">
-              {{ article.updatedTime | time('{m}-{d}') }}
+              {{ article.updatedContentTime | time('{m}-{d}') }}
             </span>
             <nuxt-link
               :to="{ path: '/article/' + article.id }"
