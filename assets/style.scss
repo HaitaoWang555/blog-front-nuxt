@@ -86,3 +86,72 @@
 #app .v-list-item .v-list-item__title, .v-list-item .v-list-item__subtitle {
   line-height: normal;
 }
+.v-content__wrap > .container{
+  height: 100%;
+}
+// 笔记样式
+.note {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  .tree-card {
+    position: fixed;
+    max-height: 90%;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+  .v-treeview i {
+    font-style: normal;
+  }
+  .markdown-viewer {
+    width: 100%;
+    min-height: 90vh;
+    position: relative;
+    margin-left: 350px;
+    .markdown-body {
+      margin: 0 auto;
+    }
+  }
+  .simulationSsr {
+    display: none;
+  }
+  .tui-editor-contents ul li, .tui-editor-contents ol li {
+    position: relative;
+  }
+  .tui-editor-contents .task-list-item {
+    border: 0;
+    list-style: none;
+    padding-left: 24px;
+    margin-left: -24px;
+  }
+  
+  .tui-editor-contents .task-list-item::before {
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+    background-position: center;
+    content: '';
+    margin-left: 0;
+    margin-top: 0;
+    border-radius: 0;
+    height: 18px;
+    width: 18px;
+    position: absolute;
+    left: 0;
+    top: 1px;
+    cursor: pointer;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAEqADAAQAAAABAAAAEgAAAACaqbJVAAAAQklEQVQ4EWM8c+bMfwYqABaQGcbGxhQZdfbsWQYmikxA0jxqEFJg4GCOhhGOgEESHg0jpMDAwRx8YQQuj0DlCaUAAEdBCPJ7TaEPAAAAAElFTkSuQmCC');
+  }
+  
+  .tui-editor-contents .task-list-item.checked::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAEqADAAQAAAABAAAAEgAAAACaqbJVAAAA1ElEQVQ4EWP0nvbsPwMVABMVzAAbMWoQIiT5OJgYvLS5EAJQFguGCB4BkCHt/kIM8kKsYFXbrn6DqyY6sJENefjuN8ORuz/ghoAYWA0COR2kEQbQDanc+I7h049/MGkwjVANFQYZkmXHD/YCyABiDAFpxQgjkJO9dbjA4QAKDxAAhQnIO9hcAlYAJDBcBHIySANII8gAYgwBGYZhEEgQZFjVJohhhFwCUg8CjPgyLT8nE8N/YJZGD1iIVlQSI4yQpT9+R40ZZDl0NlavoSsihj/4DAIAR+hZHUj727YAAAAASUVORK5CYII=');
+  }
+  
+  .tui-editor-contents .task-list-item input[type='checkbox'],
+  .tui-editor-contents .task-list-item .task-list-item-checkbox {
+    margin-left: -17px;
+    margin-right: 3.8px;
+    margin-top: 3px;
+  }
+}

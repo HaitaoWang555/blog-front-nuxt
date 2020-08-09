@@ -74,14 +74,12 @@ export default {
         { path: '/', name: '首页', icon: 'mdi-home' },
         { path: '/category', name: '分类', icon: 'mdi-folder' },
         { path: '/tag', name: '标签', icon: 'mdi-label' },
+        { path: '/note', name: '笔记', icon: 'mdi-label' },
         { path: '/archive', name: '归档', icon: 'mdi-archive' }
       ],
       miniVariant: false,
       title: 'Blog'
     }
-  },
-  mounted() {
-    this.drawer = window.innerWidth > 720
   }
 }
 </script>
