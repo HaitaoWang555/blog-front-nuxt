@@ -1,6 +1,15 @@
 <template>
   <div class="note">
-    <v-card class="tree-card">
+    <v-btn
+      v-show="treeBtn"
+      class="mx-2 tree-btn"
+      fab
+      @click="treeShow = !treeShow"
+    >
+      <v-icon small dark>mdi-format-list-bulleted-square</v-icon>
+    </v-btn>
+    <v-overlay :value="treeBtn && treeShow"></v-overlay>
+    <v-card v-show="treeShow" class="tree-card">
       <v-sheet class="pa-4 lighten-2 search">
         <v-text-field
           v-model="search"
@@ -39,10 +48,11 @@
         </v-treeview>
       </v-card-text>
     </v-card>
-    <v-skeleton-loader v-if="Loading" class="markdown-viewer" type="article" />
-    <div v-else class="markdown-viewer">
+    <div class="markdown-viewer">
+      <v-skeleton-loader v-if="Loading" class="markdown-body" type="article" />
+
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div v-highlight class="markdown-body" v-html="content"></div>
+      <div v-else v-highlight class="markdown-body" v-html="content"></div>
     </div>
   </div>
 </template>
@@ -57,12 +67,11 @@ import { treeList, getContent } from '@/api/note'
 
 export default {
   name: 'Note',
-  components: {},
   async asyncData(context) {
     const articleId = context.query.aid
     const id = context.query.id
     const oid = context.query.oid
-    let PromiseArr, items, content
+    let PromiseArr, items, content, title
     if (id) {
       PromiseArr = [treeList(), getContent(articleId)]
     } else {
@@ -72,13 +81,17 @@ export default {
     const res1 = resArr[0]
     const res2 = resArr[1]
     if (res1) items = res1.data.list
-    if (res2) content = marked(res2.data.content)
+    if (res2) {
+      content = marked(res2.data.content)
+      title = res2.data.title
+    }
     return {
       items,
       articleId,
       active: id ? id.split(',') : [],
       openId: oid ? oid.split(',').map((i) => Number(i)) : [],
-      content
+      content,
+      title
     }
   },
   data() {
@@ -90,8 +103,11 @@ export default {
       search: null,
       caseSensitive: false,
       content: '',
+      title: '',
       articleId: null,
-      Loading: false
+      Loading: false,
+      treeBtn: false,
+      treeShow: false
     }
   },
   computed: {
@@ -106,12 +122,15 @@ export default {
   },
   mounted() {
     this.Loading = false
+    this.treeBtn = window.innerWidth < 1050
+    this.treeShow = window.innerWidth > 1050
   },
   methods: {
     async getContent() {
       const id = Number(this.active[0])
       this.findArticleId(this.items, id)
       this.Loading = true
+      if (this.treeBtn) this.treeShow = false
       const res = await getContent(this.articleId)
       if (!res) {
         this.Loading = false
@@ -122,6 +141,7 @@ export default {
         query: { id, aid: this.articleId, oid: this.openId.join(',') }
       })
       this.content = marked(res.data.content)
+      this.title = res.data.title
       this.Loading = false
     },
     findArticleId(arr, id) {
@@ -133,6 +153,11 @@ export default {
           this.findArticleId(element.children, id)
         }
       })
+    }
+  },
+  head() {
+    return {
+      title: `笔记 - ${this.title}`
     }
   }
 }

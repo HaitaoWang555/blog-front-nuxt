@@ -97,10 +97,37 @@
   .tree-card {
     position: fixed;
     max-height: 90%;
+    z-index: 10;
     overflow-y: scroll;
     &::-webkit-scrollbar {
       width: 0;
     }
+  }
+  @media only screen 
+  and (min-width: 320px) 
+  and (max-width: 480px) {
+    .v-btn--fab.v-size--default {
+      width: 24px;
+      height: 24px;
+    }
+    .tree-card {
+      top: 15%;
+      max-height: 80%;
+    }
+}
+  @media screen 
+  and (min-width: 480px) 
+  and (max-width: 1050px)  {
+    .tree-card {
+      top: 13%;
+      max-height: 80%;
+    }
+  }
+  .tree-btn {
+    position: fixed;
+    top: auto;
+    left: 0;
+    z-index: 10;
   }
   .v-treeview i {
     font-style: normal;
@@ -109,13 +136,22 @@
     width: 100%;
     min-height: 90vh;
     position: relative;
-    margin-left: 350px;
     .markdown-body {
       margin: 0 auto;
     }
   }
-  .simulationSsr {
-    display: none;
+  @media screen 
+  and (min-width: 320px) 
+  and (max-width: 1050px)  {
+    .markdown-viewer {
+      margin-left: 0;
+    }
+  }
+  @media screen 
+  and (min-width: 1050px) {
+    .markdown-viewer {
+      margin-left: 350px;
+    }
   }
   .markdown-body ul li, .markdown-body ol li {
     position: relative;
@@ -139,7 +175,7 @@
     width: 18px;
     position: absolute;
     left: 0;
-    top: 1px;
+    top: 4px;
     cursor: pointer;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAEqADAAQAAAABAAAAEgAAAACaqbJVAAAAQklEQVQ4EWM8c+bMfwYqABaQGcbGxhQZdfbsWQYmikxA0jxqEFJg4GCOhhGOgEESHg0jpMDAwRx8YQQuj0DlCaUAAEdBCPJ7TaEPAAAAAElFTkSuQmCC');
   }
@@ -149,10 +185,12 @@
   }
   
   .markdown-body .task-item input[type='checkbox']{
-    margin-left: -17px;
+    margin-left: -24px;
     margin-right: 3.8px;
-    margin-top: 3px;font-size: 18px;
+    margin-top: 0px;
+    font-size: 18px;
     width: 18px;
     height: 18px;
+    visibility: hidden;
   }
 }
