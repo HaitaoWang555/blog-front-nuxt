@@ -92,6 +92,7 @@ export default {
    ** Build configuration
    */
   build: {
+    analyze: true,
     filenames: {
       app: isDev ? '[name].js' : 'js/[name]-[chunkhash:7].js',
       chunk: isDev ? '[name].js' : 'js/[name]-[chunkhash:7].js',
