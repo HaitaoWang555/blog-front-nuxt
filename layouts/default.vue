@@ -5,6 +5,7 @@
       :mini-variant="miniVariant"
       :clipped="clipped"
       fixed
+      disable-resize-watcher
       app
     >
       <v-list id="navList">
@@ -51,11 +52,11 @@
       <v-toolbar-title v-text="title" />
       <v-spacer />
     </v-app-bar>
-    <v-content>
+    <v-main>
       <v-container>
         <nuxt />
       </v-container>
-    </v-content>
+    </v-main>
     <ScrollTop></ScrollTop>
   </v-app>
 </template>

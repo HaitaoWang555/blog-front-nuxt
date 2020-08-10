@@ -85,7 +85,8 @@ export default {
     defaultAssets: false,
     treeShake: true,
     theme: {
-      dark: true
+      dark: true,
+      options: { variations: false }
     }
   },
   /*
@@ -99,7 +100,7 @@ export default {
       vendor: isDev ? '[name].js' : 'js/[name]-[chunkhash:7].js',
       css: isDev ? '[name].css' : 'css/[name]-[chunkhash:7].css'
     },
-    extractCSS: !isDev,
+    extractCSS: isDev ? false : { ignoreOrder: true },
     html: { minify: { collapseWhitespace: true } },
     /*
      ** You can extend webpack config here
