@@ -39,25 +39,25 @@
         </v-treeview>
       </v-card-text>
     </v-card>
-    <v-skeleton-loader
-      v-if="isNoClient"
-      class="markdown-viewer"
-      type="article"
-    />
-    <div v-if="isNoClient" class="simulationSsr">{{ content }}</div>
-    <Viewer v-else class="markdown-viewer" :value="content" />
+    <v-skeleton-loader v-if="Loading" class="markdown-viewer" type="article" />
+    <div v-else class="markdown-viewer">
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <div v-highlight class="markdown-body" v-html="content"></div>
+    </div>
   </div>
 </template>
 
 <script>
+import 'github-markdown-css/github-markdown.css'
+import 'highlight.js/styles/github.css'
 import 'file-icons-js/css/style.css'
 import FileIcons from 'file-icons-js'
+import marked from '@/utils/marked'
 import { treeList, getContent } from '@/api/note'
-import Viewer from '@/components/Viewer'
 
 export default {
   name: 'Note',
-  components: { Viewer },
+  components: {},
   async asyncData(context) {
     const articleId = context.query.aid
     const id = context.query.id
@@ -72,7 +72,7 @@ export default {
     const res1 = resArr[0]
     const res2 = resArr[1]
     if (res1) items = res1.data.list
-    if (res2) content = res2.data.content
+    if (res2) content = marked(res2.data.content)
     return {
       items,
       articleId,
@@ -91,7 +91,7 @@ export default {
       caseSensitive: false,
       content: '',
       articleId: null,
-      isNoClient: true
+      Loading: false
     }
   },
   computed: {
@@ -105,24 +105,24 @@ export default {
     active: 'getContent'
   },
   mounted() {
-    this.isNoClient = false
+    this.Loading = false
   },
   methods: {
     async getContent() {
       const id = Number(this.active[0])
       this.findArticleId(this.items, id)
-      this.isNoClient = true
+      this.Loading = true
       const res = await getContent(this.articleId)
       if (!res) {
-        this.isNoClient = false
+        this.Loading = false
         return
       }
       this.$router.push({
         path: '/note',
         query: { id, aid: this.articleId, oid: this.openId.join(',') }
       })
-      this.content = res.data.content
-      this.isNoClient = false
+      this.content = marked(res.data.content)
+      this.Loading = false
     },
     findArticleId(arr, id) {
       arr.forEach((element) => {
