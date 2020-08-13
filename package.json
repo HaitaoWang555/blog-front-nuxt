@@ -16,6 +16,7 @@
     "@mdi/font": "^5.2.45",
     "@mdi/js": "^5.2.45",
     "axios": "^0.19.2",
+    "dompurify": "^2.0.12",
     "file-icons-js": "github:websemantics/file-icons-js",
     "github-markdown-css": "^4.0.0",
     "highlight.js": "^10.0.3",

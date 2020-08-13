@@ -1,17 +1,20 @@
 <template>
   <div>
     <Article v-if="articleData" :data="[articleData]" :model="model" />
+    <CommentList class="designWidth" :article-id="articleData.id" />
   </div>
 </template>
 
 <script>
 import Article from '@/components/Article'
 import { article } from '@/api/article'
+import CommentList from '@/components/Comment/CommentList'
 
 export default {
   name: 'ArticleId',
   components: {
-    Article
+    Article,
+    CommentList
   },
   async asyncData({ params, error, payload }) {
     if (payload) {

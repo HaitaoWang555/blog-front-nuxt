@@ -5,6 +5,8 @@
 
 ### 简介
 `blog-front-nuxt ` 此项目为博客展示平台 基于[Nuxt.js](https://nuxtjs.org)实现. 主要功能 文章与笔记的展示
+[https://github.com/HaitaoWang555/wht-blog](https://github.com/HaitaoWang555/wht-blog) 为此项目服务端
+[https://github.com/HaitaoWang555/blog-admin-new](https://github.com/HaitaoWang555/blog-admin-new) 为后台管理平台
 
 ### 项目演示
 项目在线演示地址：[https://blog.wanghaitao.club/](https://blog.wanghaitao.club/)
