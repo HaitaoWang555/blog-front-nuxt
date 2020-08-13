@@ -3,7 +3,7 @@
     <h2 class="comments-header">留言（{{ items.length }}条）</h2>
     <div class="comments-content">
       <template v-for="(item, index) in items">
-        <div :key="index" class="comment">
+        <div :id="'comment-list-' + item.id" :key="index" class="comment">
           <div class="comment-header">
             <span v-if="!item.link">{{ item.username }} 说：</span>
             <span v-else
@@ -15,13 +15,17 @@
           <div
             v-highlight
             class="comment-content markdown-body"
-            v-html="marked(item.content)"
+            v-html="marked(item)"
           ></div>
           <div class="comment-footer">
             <span class="date">
               {{ item.createTime | time('{y}-{m}-{d} {h}:{i}') }}
             </span>
 
+            <v-divider class="mx-2 grey lighten-2" vertical></v-divider>
+            <span>
+              <a :href="'#comment-list-' + item.id">#</a>
+            </span>
             <v-divider class="mx-2 grey lighten-2" vertical></v-divider>
 
             <span @click="quote(item)">
@@ -67,6 +71,14 @@ export default {
       quoteData: null
     }
   },
+  watch: {
+    articleId: {
+      deep: true,
+      handler(val) {
+        if (val) this.init()
+      }
+    }
+  },
   mounted() {
     if (this.articleId) {
       this.init()
@@ -81,11 +93,14 @@ export default {
     setNewList(data) {
       this.items.push(data)
     },
-    marked(val) {
+    marked(item) {
+      const val = item.quoteContent
+        ? item.quoteContent + item.content
+        : item.content
       return DOMPurify.sanitize(marked(val))
     },
     quote(item) {
-      this.quoteData = item
+      this.quoteData = JSON.parse(JSON.stringify(item))
     }
   }
 }

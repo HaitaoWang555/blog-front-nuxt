@@ -40,10 +40,10 @@
           class="note-tree"
         >
           <template v-slot:prepend="{ item, open }">
-            <v-icon v-if="!FileIcons.getClass(item.name)">
+            <v-icon v-if="!fileIcons(item.name)">
               {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
             </v-icon>
-            <i v-else :class="FileIcons.getClass(item.name)"></i>
+            <i v-else :class="fileIcons(item.name)"></i>
           </template>
         </v-treeview>
       </v-card-text>
@@ -51,8 +51,15 @@
     <div class="markdown-viewer">
       <v-skeleton-loader v-if="Loading" class="markdown-body" type="article" />
 
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <div v-else v-highlight class="markdown-body" v-html="content"></div>
+      <template v-else>
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <div v-highlight class="markdown-body" v-html="content"></div>
+        <CommentList
+          v-if="articleId"
+          class="designWidth"
+          :article-id="articleId"
+        />
+      </template>
     </div>
   </div>
 </template>
@@ -64,9 +71,13 @@ import 'file-icons-js/css/style.css'
 import FileIcons from 'file-icons-js'
 import marked from '@/utils/marked'
 import { treeList, getContent } from '@/api/note'
+import CommentList from '@/components/Comment/CommentList'
 
 export default {
   name: 'Note',
+  components: {
+    CommentList
+  },
   async asyncData(context) {
     const articleId = context.query.aid
     const id = context.query.id
@@ -99,7 +110,6 @@ export default {
       openId: [],
       active: [],
       items: [],
-      FileIcons,
       search: null,
       caseSensitive: false,
       content: '',
@@ -153,6 +163,9 @@ export default {
           this.findArticleId(element.children, id)
         }
       })
+    },
+    fileIcons(name) {
+      return FileIcons.getClass(name)
     }
   },
   head() {

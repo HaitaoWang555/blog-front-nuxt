@@ -15,14 +15,13 @@
 
         <v-textarea
           id="comment-textarea"
-          v-model="form.content"
+          v-model="form.comment"
           name="comment"
           label="请填写评论"
           hint="文明发言"
           required
           :rules="commentRules"
           :counter="500"
-          @change="quote = {}"
         ></v-textarea>
       </v-form>
     </v-card-text>
@@ -36,6 +35,7 @@
 
 <script>
 import { commentCreat } from '@/api/comment'
+import { setUser, getUser } from '@/utils/store'
 
 export default {
   name: 'CommentForm',
@@ -53,7 +53,8 @@ export default {
     return {
       form: {
         username: '',
-        content: ''
+        link: '',
+        comment: ''
       },
       loading: false,
       nameRules: [
@@ -68,13 +69,30 @@ export default {
     }
   },
   watch: {
-    quote: 'initQuote'
+    quote: {
+      deep: true,
+      handler(val) {
+        this.initQuote()
+      }
+    }
+  },
+  mounted() {
+    this.init()
   },
   methods: {
+    init() {
+      const user = getUser()
+      if (!user) return
+      this.form.username = user.username
+      this.form.link = user.link
+    },
     async submit() {
       if (this.$refs.form.validate()) {
         this.loading = true
+        this.setUser()
         this.form.articleId = this.articleId
+        const checkQuote = this.checkQuote()
+        if (!checkQuote) return
         const res = await commentCreat(this.form)
         this.loading = false
         if (res.code === 200) {
@@ -88,18 +106,43 @@ export default {
       item.createTime = new Date()
       this.$emit('setNewList', item)
       this.$refs.form.reset()
+      const timer = setTimeout(() => {
+        this.init()
+        clearTimeout(timer)
+      }, 10)
     },
     initQuote() {
-      // TODO
-      if (!this.quote) return
+      if (!this.quote || !this.quote.content) return
       const content =
-        '> `引用' +
+        '> `引用 ' +
         this.quote.username +
-        '的发言` \n' +
+        ' 的发言` \n>\n' +
         '> ' +
-        this.quote.content.replace(/\n/gi, '\n >') +
-        '\n'
-      this.form.content = content
+        this.quote.content.replace(/\n/gi, '\n>') +
+        '\n\n'
+      this.form.quoteContent = content
+      this.quote.content = null
+      this.form.comment = content
+    },
+    checkQuote() {
+      if (
+        this.form.quoteContent &&
+        this.form.comment.indexOf(this.form.quoteContent) !== 0
+      ) {
+        alert('引用失败请重新写入')
+        return false
+      } else {
+        this.form.content = this.form.quoteContent
+          ? this.form.comment.slice(this.form.quoteContent.length)
+          : this.form.comment
+        return true
+      }
+    },
+    setUser() {
+      const user = {}
+      user.username = this.form.username
+      user.link = this.form.link
+      setUser(user)
     }
   }
 }
