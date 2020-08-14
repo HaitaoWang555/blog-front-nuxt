@@ -92,8 +92,12 @@ export default {
         this.setUser()
         this.form.articleId = this.articleId
         const checkQuote = this.checkQuote()
-        if (!checkQuote) return
+        if (!checkQuote) {
+          this.loading = false
+          return
+        }
         const res = await commentCreat(this.form)
+        this.$tips(res)
         this.loading = false
         if (res.code === 200) {
           this.form.id = res.data
@@ -129,7 +133,8 @@ export default {
         this.form.quoteContent &&
         this.form.comment.indexOf(this.form.quoteContent) !== 0
       ) {
-        alert('引用失败请重新写入')
+        this.$tips('引用失败请重新写入')
+        this.form.quoteContent = null
         return false
       } else {
         this.form.content = this.form.quoteContent

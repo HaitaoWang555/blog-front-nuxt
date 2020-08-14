@@ -58,6 +58,14 @@
       </v-container>
     </v-main>
     <ScrollTop></ScrollTop>
+    <v-snackbar
+      v-model="snackbar"
+      timeout="3000"
+      :color="snackbarObj.color"
+      top
+    >
+      {{ snackbarObj.tips }}
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -79,7 +87,21 @@ export default {
         { path: '/archive', name: '归档', icon: 'mdi-archive' }
       ],
       miniVariant: false,
-      title: 'Blog'
+      title: 'Blog',
+      snackbar: false
+    }
+  },
+  computed: {
+    snackbarObj() {
+      return this.$store.state.message.snackbarObj
+    }
+  },
+  watch: {
+    snackbarObj: {
+      deep: true,
+      handler(val) {
+        this.snackbar = val.snackbar
+      }
     }
   }
 }
