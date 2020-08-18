@@ -14,7 +14,9 @@
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, 0.4);
 }
-
+#app {
+  padding-bottom: 56px;
+}
 .pointer {
   cursor: pointer!important;
 }
@@ -45,6 +47,9 @@
       content: "";
     }
   }
+  .markdown-body table tr {
+    background-color: initial!important;
+  }
   .markdown-body code {
     box-shadow: none;
   }
@@ -70,9 +75,15 @@
     background-color: #4e4e4e;
   }
 }
+.form-comment-btn {
+  justify-content: flex-end;
+}
 @media (max-width: 767px) {
   .markdown-body {
     padding: 15px 0;
+  }
+  .form-comment-btn {
+    justify-content: flex-start;
   }
 }
 
@@ -118,6 +129,10 @@
   @media screen 
   and (min-width: 480px) 
   and (max-width: 1050px)  {
+    .v-btn--fab.v-size--default {
+      width: 24px;
+      height: 24px;
+    }
     .tree-card {
       top: 13%;
       max-height: 80%;

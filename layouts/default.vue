@@ -103,6 +103,13 @@ export default {
         this.snackbar = val.snackbar
       }
     }
+  },
+  created() {
+    if (new Date().getHours() > 20) {
+      this.$vuetify.theme.dark = true
+    } else {
+      this.$vuetify.theme.dark = false
+    }
   }
 }
 </script>

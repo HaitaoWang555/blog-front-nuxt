@@ -134,6 +134,9 @@ export default {
     this.Loading = false
     this.treeBtn = window.innerWidth < 1050
     this.treeShow = window.innerWidth > 1050
+    if (!this.articleId && this.treeBtn) {
+      this.treeShow = true
+    }
   },
   methods: {
     async getContent() {
@@ -151,7 +154,7 @@ export default {
         query: { id, aid: this.articleId, oid: this.openId.join(',') }
       })
       this.content = marked(res.data.content)
-      this.title = res.data.title
+      this.title = res.data.title || ''
       this.Loading = false
     },
     findArticleId(arr, id) {

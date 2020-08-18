@@ -25,7 +25,7 @@
         ></v-textarea>
       </v-form>
     </v-card-text>
-    <v-card-actions style="justify-content: flex-end;">
+    <v-card-actions class="form-comment-btn">
       <v-btn :loading="loading" color="primary mr-2" @click="submit">
         提交
       </v-btn>
