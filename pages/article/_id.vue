@@ -8,7 +8,7 @@
 <script>
 import Article from '@/components/Article'
 import { article } from '@/api/article'
-import CommentList from '@/components/Comment/CommentList'
+import CommentList from '@/components/comment/CommentList'
 
 export default {
   name: 'ArticleId',

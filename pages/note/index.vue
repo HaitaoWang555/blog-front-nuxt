@@ -71,7 +71,7 @@ import 'file-icons-js/css/style.css'
 import FileIcons from 'file-icons-js'
 import marked from '@/utils/marked'
 import { treeList, getContent } from '@/api/note'
-import CommentList from '@/components/Comment/CommentList'
+import CommentList from '@/components/comment/CommentList'
 
 export default {
   name: 'Note',
