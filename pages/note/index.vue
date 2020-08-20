@@ -53,7 +53,7 @@
 
       <template v-else>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <div v-highlight class="markdown-body" v-html="content"></div>
+        <div class="markdown-body" v-html="content"></div>
         <CommentList
           v-if="articleId"
           class="designWidth"
@@ -93,7 +93,7 @@ export default {
     const res2 = resArr[1]
     if (res1) items = res1.data.list
     if (res2) {
-      content = marked(res2.data.content)
+      content = marked.render(res2.data.content)
       title = res2.data.title
     }
     return {
@@ -153,9 +153,10 @@ export default {
         path: '/note',
         query: { id, aid: this.articleId, oid: this.openId.join(',') }
       })
-      this.content = marked(res.data.content)
+      this.content = marked.render(res.data.content)
       this.title = res.data.title || ''
       this.Loading = false
+      this.$vuetify.goTo('html')
     },
     findArticleId(arr, id) {
       arr.forEach((element) => {
