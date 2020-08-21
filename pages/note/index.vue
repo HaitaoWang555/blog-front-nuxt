@@ -6,9 +6,10 @@
       fab
       @click="treeShow = !treeShow"
     >
-      <v-icon small dark>mdi-format-list-bulleted-square</v-icon>
+      <v-icon v-if="!treeShow" small>mdi-format-list-bulleted-square</v-icon>
+      <v-icon v-else small>mdi-close</v-icon>
     </v-btn>
-    <v-overlay :value="treeBtn && treeShow"></v-overlay>
+    <v-overlay :z-index="4" :value="treeBtn && treeShow"> </v-overlay>
     <v-card v-show="treeShow" class="tree-card">
       <v-sheet class="pa-4 lighten-2 search">
         <v-text-field
@@ -35,7 +36,6 @@
           :filter="filter"
           activatable
           item-key="id"
-          style="width: 300px;"
           open-on-click
           class="note-tree"
         >
@@ -93,7 +93,7 @@ export default {
     const res2 = resArr[1]
     if (res1) items = res1.data.list
     if (res2) {
-      content = marked.render(res2.data.content)
+      content = marked.render('[toc]\n' + res2.data.content)
       title = res2.data.title
     }
     return {
@@ -130,6 +130,9 @@ export default {
   watch: {
     active: 'getContent'
   },
+  created() {
+    this.$store.commit('appBar/SET_APP_BAR', { title: this.title })
+  },
   mounted() {
     this.Loading = false
     this.treeBtn = window.innerWidth < 1050
@@ -137,10 +140,12 @@ export default {
     if (!this.articleId && this.treeBtn) {
       this.treeShow = true
     }
+    this.goHref()
   },
   methods: {
     async getContent() {
       const id = Number(this.active[0])
+      if (!id) return
       this.findArticleId(this.items, id)
       this.Loading = true
       if (this.treeBtn) this.treeShow = false
@@ -153,8 +158,9 @@ export default {
         path: '/note',
         query: { id, aid: this.articleId, oid: this.openId.join(',') }
       })
-      this.content = marked.render(res.data.content)
+      this.content = marked.render('[toc]\n' + res.data.content)
       this.title = res.data.title || ''
+      this.$store.commit('appBar/SET_APP_BAR', { title: this.title })
       this.Loading = false
       this.$vuetify.goTo('html')
     },
@@ -170,6 +176,13 @@ export default {
     },
     fileIcons(name) {
       return FileIcons.getClass(name)
+    },
+    goHref() {
+      const hash = this.$route.hash
+      if (hash) {
+        const id = decodeURI(hash)
+        document.querySelector(id + ' a').click()
+      }
     }
   },
   head() {
@@ -179,3 +192,105 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.note .markdown-viewer .markdown-body nav.table-of-contents {
+  width: 255px;
+  position: fixed;
+  right: 3%;
+  background-color: white;
+  padding: 5px 15px;
+  border-radius: 4px;
+  max-height: calc(100vh - 80px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  a {
+    font-size: 12px;
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 1050px) {
+  .note .markdown-viewer .markdown-body nav.table-of-contents {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-height: inherit;
+  }
+}
+</style>
+<style lang="scss" scoped>
+// 笔记样式
+.note {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  .btnclose {
+    position: absolute;
+    right: 0;
+    top: -10px;
+  }
+  .tree-card {
+    position: fixed;
+    max-height: calc(100vh - 80px);
+    width: 255px;
+    z-index: 10;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+  @media only screen and (min-width: 320px) and (max-width: 480px) {
+    .v-btn--fab.v-size--default {
+      width: 24px;
+      height: 24px;
+    }
+    .tree-card {
+      top: 15%;
+      max-height: 80%;
+    }
+  }
+  @media screen and (min-width: 480px) and (max-width: 1050px) {
+    .v-btn--fab.v-size--default {
+      width: 24px;
+      height: 24px;
+    }
+    .tree-card {
+      top: 13%;
+      max-height: 80%;
+    }
+  }
+  .tree-btn {
+    position: fixed;
+    top: auto;
+    left: 0;
+    z-index: 5;
+  }
+  .v-treeview i {
+    font-style: normal;
+  }
+  .markdown-viewer {
+    width: 100%;
+    min-height: 90vh;
+    padding: 0 255px;
+    .markdown-body {
+      margin: 0 auto;
+      padding-top: 0;
+    }
+  }
+  @media screen and (min-width: 320px) and (max-width: 1050px) {
+    .markdown-viewer {
+      margin-left: 0;
+      padding: 24px 0;
+    }
+  }
+  @media screen and (min-width: 1050px) {
+    .markdown-viewer {
+      margin: 0 auto;
+    }
+    .tree-card {
+      left: 3%;
+    }
+  }
+}
+</style>
