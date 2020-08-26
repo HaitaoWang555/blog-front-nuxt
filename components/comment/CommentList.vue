@@ -13,7 +13,6 @@
           </div>
           <!-- eslint-disable vue/no-v-html -->
           <div
-            v-highlight
             class="comment-content markdown-body"
             v-html="marked(item)"
           ></div>
@@ -97,7 +96,7 @@ export default {
       const val = item.quoteContent
         ? item.quoteContent + item.content
         : item.content
-      return DOMPurify.sanitize(marked(val))
+      return DOMPurify.sanitize(marked.render(val))
     },
     quote(item) {
       this.quoteData = JSON.parse(JSON.stringify(item))

@@ -105,7 +105,8 @@ export default {
     }
   },
   created() {
-    if (new Date().getHours() > 20) {
+    const hour = new Date().getHours()
+    if (hour > 19 || hour < 6) {
       this.$vuetify.theme.dark = true
     } else {
       this.$vuetify.theme.dark = false

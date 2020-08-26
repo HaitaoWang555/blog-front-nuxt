@@ -53,12 +53,8 @@
 
       <template v-else>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <div class="markdown-body" v-html="content"></div>
-        <CommentList
-          v-if="articleId"
-          class="designWidth"
-          :article-id="articleId"
-        />
+        <div v-highlight class="markdown-body" v-html="content"></div>
+        <CommentList v-if="articleId" :article-id="articleId" />
       </template>
     </div>
   </div>
@@ -205,8 +201,17 @@ export default {
   overflow-x: hidden;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
     0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  &::-webkit-scrollbar {
+    width: 0;
+  }
   a {
     font-size: 12px;
+  }
+}
+.theme--dark {
+  .note .markdown-viewer .markdown-body nav.table-of-contents {
+    background-color: #1e1e1e;
+    box-shadow: none;
   }
 }
 @media screen and (min-width: 320px) and (max-width: 1050px) {
