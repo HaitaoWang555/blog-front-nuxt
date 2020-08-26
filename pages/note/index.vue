@@ -212,6 +212,9 @@ export default {
   .note .markdown-viewer .markdown-body nav.table-of-contents {
     background-color: #1e1e1e;
     box-shadow: none;
+    a {
+      color: white;
+    }
   }
 }
 @media screen and (min-width: 320px) and (max-width: 1050px) {
