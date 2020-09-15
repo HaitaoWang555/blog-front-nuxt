@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <Article v-if="articleData" :data="[articleData]" :model="model" />
+  <div v-if="articleData">
+    <Article :data="[articleData]" :model="model" />
     <CommentList class="designWidth" :article-id="articleData.id" />
   </div>
 </template>
@@ -23,9 +23,8 @@ export default {
       }
     } else {
       const res = await article(params)
-      if (!res) return
       return {
-        articleData: res.data
+        articleData: res ? res.data : ''
       }
     }
   },
@@ -35,6 +34,11 @@ export default {
       model: {
         type: 'details'
       }
+    }
+  },
+  created() {
+    if (!this.articleData) {
+      this.$router.push({ path: '/404' })
     }
   },
   head() {
