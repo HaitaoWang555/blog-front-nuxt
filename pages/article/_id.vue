@@ -52,7 +52,7 @@ export default {
       title,
       meta: [
         {
-          hid: 'description1',
+          hid: 'description',
           name: 'description',
           content
         }

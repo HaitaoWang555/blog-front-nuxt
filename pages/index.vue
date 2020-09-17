@@ -62,7 +62,7 @@ export default {
       title: `首页`,
       meta: [
         {
-          hid: 'description1',
+          hid: 'description',
           name: 'description',
           content
         }

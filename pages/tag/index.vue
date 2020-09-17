@@ -85,7 +85,7 @@ export default {
       title: `标签`,
       meta: [
         {
-          hid: 'description1',
+          hid: 'description',
           name: 'description',
           content: content1.join(',')
         },

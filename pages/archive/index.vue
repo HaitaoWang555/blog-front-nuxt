@@ -69,7 +69,7 @@ export default {
       title: `归档`,
       meta: [
         {
-          hid: 'description1',
+          hid: 'description',
           name: 'description',
           content: content.join(',')
         }
